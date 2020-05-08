@@ -15,8 +15,7 @@ namespace Ark::internal
         switch (m_type)
         {
             case ValueType::List:
-                new (&m_value.list) std::vector<Value>;
-                m_value.list = value.m_value.list;
+                new (&m_value.list) std::vector<Value>(value.m_value.list);
                 break;
 
             case ValueType::Number:
@@ -24,8 +23,7 @@ namespace Ark::internal
                 break;
 
             case ValueType::String:
-                new (&m_value.string) std::string;
-                m_value.string = value.m_value.string;
+                new (&m_value.string) String(value.m_value.string);
                 break;
 
             case ValueType::PageAddr:
@@ -37,13 +35,11 @@ namespace Ark::internal
                 break;
 
             case ValueType::Closure:
-                new (&m_value.closure) Closure;
-                m_value.closure = value.m_value.closure;
+                new (&m_value.closure) Closure(value.m_value.closure);
                 break;
 
             case ValueType::User:
-                new (&m_value.user) UserType;
-                m_value.user = value.m_value.user;
+                new (&m_value.user) UserType(value.m_value.user);
                 break;
 
             default:
@@ -62,8 +58,7 @@ namespace Ark::internal
         switch (m_type)
         {
             case ValueType::List:
-                new (&m_value.list) std::vector<Value>;
-                m_value.list = value.m_value.list;
+                new (&m_value.list) std::vector<Value>(value.m_value.list);
                 break;
 
             case ValueType::Number:
@@ -71,8 +66,7 @@ namespace Ark::internal
                 break;
 
             case ValueType::String:
-                new (&m_value.string) std::string;
-                m_value.string = value.m_value.string;
+                new (&m_value.string) String(value.m_value.string);
                 break;
 
             case ValueType::PageAddr:
@@ -84,13 +78,11 @@ namespace Ark::internal
                 break;
 
             case ValueType::Closure:
-                new (&m_value.closure) Closure;
-                m_value.closure = value.m_value.closure;
+                new (&m_value.closure) Closure(value.m_value.closure);
                 break;
 
             case ValueType::User:
-                new (&m_value.user) UserType;
-                m_value.user = value.m_value.user;
+                new (&m_value.user) UserType(value.m_value.user);
                 break;
 
             default:
@@ -109,7 +101,7 @@ namespace Ark::internal
                 break;
 
             case ValueType::String:
-                m_value.string.~basic_string();
+                m_value.string.~String();
                 break;
 
             case ValueType::Closure:
@@ -137,7 +129,7 @@ namespace Ark::internal
                 break;
 
             case ValueType::String:
-                new (&m_value.string) std::string;
+                new (&m_value.string) String;
                 break;
 
             case ValueType::Closure:
@@ -171,22 +163,19 @@ namespace Ark::internal
     Value::Value(const std::string& value) :
         m_type(ValueType::String), m_const(false)
     {
-        new (&m_value.string) String;
-        m_value.string = value;
+        new (&m_value.string) String(value.c_str());
     }
 
     Value::Value(const String& value) :
         m_type(ValueType::String), m_const(false)
     {
-        new (&m_value.string) String;
-        m_value.string = value;
+        new (&m_value.string) String(value);
     }
 
     Value::Value(const char* value) :
         m_type(ValueType::String), m_const(false)
     {
-        new (&m_value.string) String;
-        m_value.string = value;
+        new (&m_value.string) String(value);
     }
 
     Value::Value(PageAddr_t value) :
@@ -204,22 +193,19 @@ namespace Ark::internal
     Value::Value(std::vector<Value>&& value) :
         m_type(ValueType::List), m_const(false)
     {
-        new (&m_value.list) std::vector<Value>;
-        m_value.list = value;
+        new (&m_value.list) std::vector<Value>(value);
     }
 
     Value::Value(Closure&& value) :
         m_type(ValueType::Closure), m_const(false)
     {
-        new (&m_value.closure) Closure;
-        m_value.closure = value;
+        new (&m_value.closure) Closure(value);
     }
 
     Value::Value(UserType&& value) :
         m_type(ValueType::User), m_const(false)
     {
-        new (&m_value.user) UserType;
-        m_value.user = value;
+        new (&m_value.user) UserType(value);
     }
 
     // --------------------------
