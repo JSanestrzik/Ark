@@ -1,7 +1,7 @@
 #ifndef ark_vm_closure
 #define ark_vm_closure
 
-#include <memory>
+#include <small_shared_ptr.hpp>
 #include <vector>
 #include <iostream>
 
@@ -18,7 +18,7 @@ namespace Ark::internal
      *  because a Closure could continue to leave when the local variables list
      *  has been closed by the virtual machine
      */
-    using Scope_t = std::shared_ptr<std::vector<Value>>;
+    using Scope_t = small_shared_ptr<std::vector<Value>>;
 
     /**
      * @brief Closure management
@@ -73,7 +73,7 @@ namespace Ark::internal
         friend inline bool operator==(const Closure& A, const Closure& B);
         friend inline bool operator<(const Closure& A, const Closure& B);
         friend std::ostream& operator<<(std::ostream& os, const Closure& C);
-    
+
     private:
         Scope_t m_scope;
         // keep track of the code page number, in case we need it later

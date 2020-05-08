@@ -2,7 +2,7 @@
 //               instructions
 // ------------------------------------------
 
-#define createNewScope() m_locals.emplace_back(std::make_shared<std::vector<internal::Value>>(m_state->m_symbols.size(), internal::ValueType::Undefined));
+#define createNewScope() m_locals.emplace_back(make_small_shared<std::vector<internal::Value>>(m_state->m_symbols.size(), internal::ValueType::Undefined));
 
 template <typename... Args>
 internal::Value VM::call(const std::string& name, Args&&... args)

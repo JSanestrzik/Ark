@@ -15,7 +15,7 @@
 #define popValFrom(page) m_frames[static_cast<std::size_t>(page)].pop()
 #define push(value) m_frames.back().push(value)
 // create a new locals scope
-#define createNewScope() m_locals.emplace_back(std::make_shared<std::vector<Value>>(m_state->m_symbols.size(), ValueType::Undefined));
+#define createNewScope() m_locals.emplace_back(make_small_shared<std::vector<Value>>(m_state->m_symbols.size(), ValueType::Undefined));
 // get a variable from a scope
 #define getVariableInCurrentScope(id) (*m_locals.back())[id]
 
@@ -343,7 +343,7 @@ namespace Ark
 
                         if (!m_saved_scope)
                         {
-                            m_saved_scope = std::make_shared<std::vector<Value>>(
+                            m_saved_scope = make_small_shared<std::vector<Value>>(
                                 m_state->m_symbols.size(), ValueType::Undefined
                             );
                         }
