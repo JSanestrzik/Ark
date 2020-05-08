@@ -2,12 +2,13 @@
 #define ark_vm_value
 
 #include <vector>
-#include <string>
+#include <string>  // for conversions
 #include <cinttypes>
 #include <iostream>
 #include <memory>
 #include <functional>
 #include <utility>
+#include <Ark/String.hpp>  // our string implementation
 
 #include <Ark/VM/Types.hpp>
 #include <Ark/VM/Closure.hpp>
@@ -47,7 +48,7 @@ namespace Ark::internal
     {
         double              number;
         PageAddr_t          page;
-        std::string         string;
+        String              string;
         Value (*proc) (std::vector<Value>&);
         Closure             closure;
         UserType            user;
@@ -117,7 +118,14 @@ namespace Ark::internal
          * 
          * @param value 
          */
-        Value(std::string&& value);
+        Value(const String& value);
+
+        /**
+         * @brief Construct a new Value object as a String
+         * 
+         * @param value 
+         */
+        Value(const char* value);
 
         /**
          * @brief Construct a new Value object as a Function
@@ -179,9 +187,9 @@ namespace Ark::internal
         /**
          * @brief Return the stored string
          * 
-         * @return const std::string& 
+         * @return const String& 
          */
-        inline const std::string& string() const;
+        inline const String& string() const;
 
         /**
          * @brief Return the stored list
@@ -207,9 +215,9 @@ namespace Ark::internal
         /**
          * @brief Return the stored string as a reference
          * 
-         * @return std::string& 
+         * @return String& 
          */
-        std::string& string_ref();
+        String& string_ref();
 
         /**
          * @brief Return the stored user type as a reference
@@ -262,9 +270,9 @@ namespace Ark::internal
         /**
          * @brief Return the page address held by the value
          * 
-         * @return PageAddr_t 
+         * @return internal::PageAddr_t 
          */
-        inline PageAddr_t pageAddr() const;
+        inline internal::PageAddr_t pageAddr() const;
 
         /**
          * @brief Return the C Function held by the value
@@ -276,16 +284,16 @@ namespace Ark::internal
         /**
          * @brief Return the closure held by the value
          * 
-         * @return const Closure& 
+         * @return const internal::Closure& 
          */
-        inline const Closure& closure() const;
+        inline const internal::Closure& closure() const;
 
         /**
          * @brief Return a reference to the closure held by the value
          * 
-         * @return Closure& 
+         * @return internal::Closure& 
          */
-        Closure& closure_ref();
+        internal::Closure& closure_ref();
 
         /**
          * @brief Register a pointer to the virtual machine, needed to resolve function calls

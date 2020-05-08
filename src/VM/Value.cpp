@@ -171,14 +171,21 @@ namespace Ark::internal
     Value::Value(const std::string& value) :
         m_type(ValueType::String), m_const(false)
     {
-        new (&m_value.string) std::string;
+        new (&m_value.string) String;
         m_value.string = value;
     }
 
-    Value::Value(std::string&& value) :
+    Value::Value(const String& value) :
         m_type(ValueType::String), m_const(false)
     {
-        new (&m_value.string) std::string;
+        new (&m_value.string) String;
+        m_value.string = value;
+    }
+
+    Value::Value(const char* value) :
+        m_type(ValueType::String), m_const(false)
+    {
+        new (&m_value.string) String;
         m_value.string = value;
     }
 
@@ -227,7 +234,7 @@ namespace Ark::internal
         return m_value.closure;
     }
 
-    std::string& Value::string_ref()
+    String& Value::string_ref()
     {
         return m_value.string;
     }
@@ -299,11 +306,11 @@ namespace Ark::internal
             os << d;
             break;
         }
-        
+
         case ValueType::String:
-            os << V.string();
+            os << V.string().c_str();
             break;
-        
+
         case ValueType::PageAddr:
             os << "Function @ " << V.pageAddr();
             break;
@@ -311,7 +318,7 @@ namespace Ark::internal
         case ValueType::CProc:
             os << "CProcedure";
             break;
-        
+
         case ValueType::List:
         {
             os << "[";

@@ -95,11 +95,11 @@ int main(int argc, char** argv)
                                              "        ArkScript programming language");
                 std::cout << std::endl;
                 break;
-            
+
             case mode::version:
                 std::cout << "Version " << ARK_VERSION_MAJOR << "." << ARK_VERSION_MINOR << "." << ARK_VERSION_PATCH << std::endl;
                 break;
-            
+
             case mode::dev_info:
                 std::cout << "Have been compiled with " << ARK_COMPILER << ", options: " << ARK_COMPILATION_OPTIONS << "\n\n";
                 std::cout << "sizeof(Ark::Value)    = " << sizeof(Ark::internal::Value) << "B\n";
@@ -109,10 +109,12 @@ int main(int argc, char** argv)
                 std::cout << "sizeof(Ark::Closure)  = " << sizeof(Ark::internal::Closure) << "B\n";
                 std::cout << "sizeof(Ark::UserType) = " << sizeof(Ark::UserType) << "B\n";
                 std::cout << "sizeof(Ark::VM)       = " << sizeof(Ark::VM) << "B\n";
+                std::cout << "sizeof(vector<Ark::Value>) = " << sizeof(std::vector<Ark::internal::Value>) << "B\n";
+                std::cout << "sizeof(std::string)   = " << sizeof(std::string) << "B\n";
                 std::cout << "sizeof(char)          = " << sizeof(char) << "B\n";
                 std::cout << std::endl;
                 break;
-            
+
             case mode::repl:
             {
                 Ark::Repl repl(options, lib_dir);
@@ -148,7 +150,7 @@ int main(int argc, char** argv)
                 Ark::VM vm(&state);
                 return vm.run();
             }
-            
+
             case mode::bytecode_reader:
                 bcr(file);
                 break;
@@ -166,7 +168,6 @@ int main(int argc, char** argv)
 
     // to avoid some "CLI glitches"
     std::cout << termcolor::reset;
-    
     return 0;
 }
 

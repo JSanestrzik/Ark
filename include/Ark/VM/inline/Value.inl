@@ -15,7 +15,7 @@ inline double Value::number() const
     return m_value.number;
 }
 
-inline const std::string& Value::string() const
+inline const String& Value::string() const
 {
     return m_value.string;
 }
@@ -141,7 +141,7 @@ inline bool operator!(const Value& A)
             return !A.number();
 
         case ValueType::String:
-            return A.string().empty();
+            return A.string().size() == 0;
 
         case ValueType::User:
             return A.usertype().not_();

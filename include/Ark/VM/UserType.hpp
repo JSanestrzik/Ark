@@ -1,7 +1,6 @@
 #ifndef ark_vm_usertype
 #define ark_vm_usertype
 
-#include <functional>
 #include <iostream>
 #include <vector>
 #include <utility>
@@ -19,7 +18,7 @@ namespace Ark
     class UserType
     {
     public:
-        using FuncStream_t = std::function<std::ostream& (std::ostream& os, const UserType& A)>;
+        using FuncStream_t = std::ostream& (*) (std::ostream& os, const UserType& A);
 
         UserType() :
             m_data(nullptr), m_ostream_func(nullptr), m_type_id(std::type_index(typeid(void)))
@@ -70,7 +69,7 @@ namespace Ark
         friend inline bool operator==(const UserType& A, const UserType& B);
         friend inline bool operator<(const UserType& A, const UserType& B);
         friend inline std::ostream& operator<<(std::ostream& os, const UserType& A);
-    
+
     private:
         std::type_index m_type_id;
         void* m_data;
