@@ -11,6 +11,7 @@
 #include <utility>
 #include <Ark/String.hpp>  // our string implementation
 #include <string.h>  // strcmp
+#include <function_view.hpp>
 
 #include <Ark/VM/Types.hpp>
 #include <Ark/VM/Closure.hpp>
@@ -46,7 +47,7 @@ namespace Ark::internal
     class ARK_API_EXPORT Value
     {
     public:
-        using ProcType = Value (*) (std::vector<Value>&, Ark::VM*);  // std::function<Value (std::vector<Value>&, Ark::VM*)>;
+        using ProcType = function_view<Value, std::vector<Value>&, Ark::VM*>;  // Value (*) (std::vector<Value>&, Ark::VM*);  // std::function<Value (std::vector<Value>&, Ark::VM*)>;
         using Iterator = std::vector<Value>::iterator;
         using ConstIterator = std::vector<Value>::const_iterator;
 

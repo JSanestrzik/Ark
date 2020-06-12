@@ -2,6 +2,8 @@
 
 ## Unreleased changes
 ### Added
+- exporting needed C++ symbols
+- adding function_view from https://vittorioromeo.info/index/blog/passing_functions_to_functions.html#fn_view_impl
 
 ### Changed
 - updated the string module to benefit from the new `format` member function
